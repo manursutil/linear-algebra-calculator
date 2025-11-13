@@ -9,15 +9,15 @@ class MatrixCalculatorApp:
         self.root = root
         self.root.title("Matrix Calculator")
 
-        tk.Label(self.root, text="Matrix A (rows on new lines):", font=("Arial", 24)).grid(
-            row=0, column=0, sticky="w", padx=5, pady=5
-        )
+        tk.Label(
+            self.root, text="Matrix A (rows on new lines):", font=("Arial", 24)
+        ).grid(row=0, column=0, sticky="w", padx=5, pady=5)
         self.txtA = tk.Text(self.root, width=30, height=10, font=("Arial", 24))
         self.txtA.grid(row=1, column=0, padx=5, pady=5)
 
-        tk.Label(self.root, text="Matrix B (rows on new lines):", font=("Arial", 24)).grid(
-            row=0, column=1, sticky="w", padx=5, pady=5
-        )
+        tk.Label(
+            self.root, text="Matrix B (rows on new lines):", font=("Arial", 24)
+        ).grid(row=0, column=1, sticky="w", padx=5, pady=5)
         self.txtB = tk.Text(self.root, width=30, height=10, font=("Arial", 24))
         self.txtB.grid(row=1, column=1, padx=5, pady=5)
 
@@ -36,10 +36,16 @@ class MatrixCalculatorApp:
         tk.Button(button_frame, text="Inverse A", command=self.inverse_matrix).pack(
             side=tk.LEFT, padx=5
         )
-        tk.Button(button_frame, text="Det(A)").pack(side=tk.LEFT, padx=5)
+        tk.Button(button_frame, text="Det(A)", command=self.calculate_determinant).pack(
+            side=tk.LEFT, padx=5
+        )
 
-        tk.Label(root, text="Result:", font=("Arial", 24)).grid(row=3, column=0, sticky="w", padx=5, pady=5)
-        self.txtResult = tk.Text(root, width=65, height=10, state="disabled", font=("Arial", 24))
+        tk.Label(root, text="Result:", font=("Arial", 24)).grid(
+            row=3, column=0, sticky="w", padx=5, pady=5
+        )
+        self.txtResult = tk.Text(
+            root, width=65, height=10, state="disabled", font=("Arial", 24)
+        )
         self.txtResult.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
 
     def parse_matrix(self, text: str) -> Matrix | None:
@@ -87,14 +93,14 @@ class MatrixCalculatorApp:
             except ValueError as e:
                 messagebox.showerror("Calculation Error", str(e))
 
-    # def calculate_determinant(self):
-    #     a = self.parse_matrix(self.txtA.get("1.0", tk.END))
-    #     if a:
-    #         try:
-    #             det = a.det()
-    #             self.display_result(det)
-    #         except ValueError as e:
-    #             messagebox.showerror("Calculation Error", str(e))
+    def calculate_determinant(self):
+        a = self.parse_matrix(self.txtA.get("1.0", tk.END))
+        if a:
+            try:
+                det = a.det()
+                self.display_scalar(det)
+            except ValueError as e:
+                messagebox.showerror("Calculation Error", str(e))
 
     def display_result(self, matrix: Matrix) -> None:
         self.txtResult.config(state="normal")
@@ -116,6 +122,12 @@ class MatrixCalculatorApp:
 
         result_str = "\n".join(lines)
         self.txtResult.insert(tk.END, result_str)
+        self.txtResult.config(state="disabled")
+
+    def display_scalar(self, value: float) -> None:
+        self.txtResult.config(state="normal")
+        self.txtResult.delete("1.0", tk.END)
+        self.txtResult.insert(tk.END, f"{value:g}")
         self.txtResult.config(state="disabled")
 
 
