@@ -8,4 +8,14 @@ Small academic project for learning Python by re-implementing a handful of linea
 python main.py
 ```
 
-This prints a few sample matrices with ASCII borders, their determinants, and—in the invertible cases—the computed inverses. Adjust `main.py` to experiment with your own matrices or extend `matrix.py` with new operations as practice.
+This prints a few sample matrices with ASCII borders, their determinants, and — in the invertible cases — the computed inverses. Adjust `main.py` to experiment with your own matrices or extend `matrix.py` with new operations.
+
+## GUI
+
+Run the interactive matrix calculator:
+
+```bash
+python tkinter_gui.py
+```
+
+A basic Tkinter-based GUI lets you input matrices and perform operations like addition, multiplication, transpose, and inverse.
